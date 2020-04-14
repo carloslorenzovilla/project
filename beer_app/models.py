@@ -3,6 +3,7 @@ from werkzeug.security import generate_password_hash,check_password_hash
 from flask_login import UserMixin
 from datetime import datetime
 
+#Allows the use of "is user authenticated" functionality in templates
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(user_id)
@@ -18,7 +19,7 @@ class User(db.Model,UserMixin):
     username = db.Column(db.String(64),unique=True,index=True)
     password_hash = db.Column(db.String(128))
     transactions = db.relationship('Transaction',backref='user',lazy='dynamic')
-    recs = db.relationship('Rec',backref='user',lazy='dynamic')
+    recs = db.relationship('Recommendation',backref='user',lazy='dynamic')
 
     def __init__(self,email,username,password):
         self.email = email
@@ -52,9 +53,9 @@ class Transaction(db.Model):
         return f"Transaction #{self.id} -- Beer ID: {self.item_id} -- User ID: {self.user_id}"
 
 # RECOMMENDATIONS
-class Rec(db.Model):
+class Recommendation(db.Model):
 
-    __tablename__ = 'recs'
+    __tablename__ = 'recommendations'
 
     users = db.relationship(User)
     items = db.relationship(Item)
@@ -69,7 +70,7 @@ class Rec(db.Model):
         self.item_id = item_id
 
     def __repr__(self):
-        return f"Rec #{self.id} -- Beer ID: {self.item_id} -- User ID: {self.user_id}"
+        return f"Rec ID: {self.id} -- Beer ID: {self.item_id} -- User ID: {self.user_id}"
 
 # BEERS
 class Item(db.Model):
@@ -93,20 +94,20 @@ class Item(db.Model):
         self.location_id = location_id
 
     def __repr__(self):
-        return f"{self.name} -- {locations.name} -- ABV: {self.abv} -- IBU: {self.ibu}"
+        return f"{self.name} -- {self.locations.name} -- ABV: {self.abv} -- IBU: {self.ibu}"
 
 # BREWERIES   
 class Location(db.Model):
 
     __tablename__ = 'locations'
-    
+
     id = db.Column(db.Integer,primary_key=True)
     name = db.Column(db.String(64),nullable=False,index=True)
     address = db.Column(db.String(64),nullable=False,index=True)
     phone = db.Column(db.String(10),nullable=False,index=True)
     neighborhood = db.Column(db.String(64),nullable=False,index=True)
     website = db.Column(db.String(64),nullable=False,index=True)
-    items = db.relationship('Item',backref='location',lazy='dynamic')
+    items = db.relationship('Item',backref='locations')
 
     def __repr__(self):
         return f"{self.name} -- {self.address} -- {self.phone} -- {self.website}"
