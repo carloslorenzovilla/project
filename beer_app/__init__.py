@@ -32,3 +32,8 @@ login_manager.login_view = 'users.login'
 #### BLUEPRINTS ####
 ####################
 
+from beer_app.core.views import core
+from beer_app.error_pages.handlers import error_pages
+
+app.register_blueprint(core)
+app.register_blueprint(error_pages)
