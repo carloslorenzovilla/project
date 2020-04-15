@@ -19,7 +19,7 @@ class User(db.Model,UserMixin):
     username = db.Column(db.String(64),unique=True,index=True)
     password_hash = db.Column(db.String(128))
     transactions = db.relationship('Transaction',backref='user',lazy='dynamic')
-    recs = db.relationship('Recommendation',backref='user',lazy='dynamic')
+    recommendations = db.relationship('Recommendation',backref='user',lazy='dynamic')
 
     def __init__(self,email,username,password):
         self.email = email
