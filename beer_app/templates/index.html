@@ -3,6 +3,9 @@
 
     <div class='jumbotron'>
         <h1>The Beer Recommendation App</h1>
+        {% if current_user.is_authenticated %}
+        <h2>Welcome {{current_user.username}}!</h2>
+        {% endif %}
     </div>
     <div class='container'>
         <h3>This is where we put a feed to local beer news!</h3>           
