@@ -84,10 +84,10 @@ def account():
 
 # transactions
 @users.route("/<username>")
-def user_posts(username):
+def transactions(username):
     pass
 
 # recommendations
 @users.route("/<username>")
-def user_posts(username):
+def recs(username):
     pass
