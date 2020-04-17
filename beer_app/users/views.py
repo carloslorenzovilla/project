@@ -84,12 +84,12 @@ def account():
     profile_image = url_for('static',filename='profile_pics/'+current_user.profile_image)
     return render_template('account.html',profile_image=profile_image,form=form)
 
-# transactions
-@users.route("/<username>")
-def transactions(username):
-    pass
+# # transactions
+# @users.route("/<username>")
+# def transactions(username):
+#     pass
 
-# recommendations
-@users.route("/<username>")
-def recs(username):
-    pass
+# # recommendations
+# @users.route("/<username>")
+# def recs(username):
+#     pass

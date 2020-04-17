@@ -32,17 +32,31 @@ class User(db.Model,UserMixin):
     def __repr__(self):
         return f"Username: {self.username} Email: {self.email}"
 
+# NEIGHBORHOODS
+class Zone(db.Model):
+
+    __tablename__='zones'
+
+    id = db.Column(db.Integer,primary_key=True)
+    name = db.Column(db.String(64),index=True)
+    locations = db.relationship('Location',backref='zone')
+
+    def __repr__(self):
+        return f"{self.name}"
+
 # BREWERIES   
 class Location(db.Model):
 
     __tablename__ = 'locations'
 
+    zones = db.relationship(Zone)
+
     id = db.Column(db.Integer,primary_key=True)
     name = db.Column(db.String(64),nullable=False,index=True)
-    address = db.Column(db.String(64),nullable=False,index=True)
-    phone = db.Column(db.String(10),nullable=False,index=True)
-    neighborhood = db.Column(db.String(64),nullable=False,index=True)
-    website = db.Column(db.String(64),nullable=False,index=True)
+    address = db.Column(db.String(64),nullable=True,index=True)
+    phone = db.Column(db.String(10),nullable=True,index=True)
+    website = db.Column(db.String(64),nullable=True,index=True)
+    zone_id = db.Column(db.Integer,db.ForeignKey('zones.id'),nullable=False)
     items = db.relationship('Item',backref='location')
 
     def __repr__(self):
@@ -72,7 +86,7 @@ class Item(db.Model):
     def __repr__(self):
         return f"{self.name} -- {self.locations.name} -- ABV: {self.abv} -- IBU: {self.ibu}"
 
-# BEER LOGS
+# BEER LOG
 class Transaction(db.Model):
 
     __tablename__ = 'transactions'
