@@ -16,26 +16,40 @@ def post_transaction():
     form.location.choices = [(location.id, location.name) for location in Location.query.order_by('name')]
     form.item.choices=[(item.id, item.name) for item in Item.query.order_by('id')]
 
-    if form.validate_on_submit():
-        transaction = Transaction(user_id=current_user.id,
-                                                item_id=form.item.data)
-        db.session.add(transaction)
-        db.session.commit()
-        flash('Beer posted to your log!')
-        return redirect(url_for('core.index'))
+    # if form.validate_on_submit():
+    #     transaction = Transaction(user_id=current_user.id,
+    #                                             item_id=form.item.data)
+    #     db.session.add(transaction)
+    #     db.session.commit()
+    #     flash('Beer posted to your log!')
+    #     return redirect(url_for('core.index'))
     
     return render_template('transactions.html',form=form)
 
-# @transactions.route('/location/<zone>')
-# def location(zone):
-#     locations = Location.query.filter_by(neighborhood=zone).all()
+@transactions.route('/location/<zone>')
+def location(zone):
+    locations = Location.query.filter_by(zone_id=zone).all()
 
-#     location_list = []
+    location_list = []
 
-#     for location in locations:
-#         locationObj = {}
-#         locationObj['id'] = location.id
-#         locationObj['name'] = location.name
-#         location_list.append(locationObj)
+    for location in locations:
+        locationObj = {}
+        locationObj['id'] = location.id
+        locationObj['name'] = location.name
+        location_list.append(locationObj)
 
-#     return jsonify({'locations' : locations_list})
+    return jsonify({'locations' : location_list})
+
+@transactions.route('/item/<location>')
+def item(location):
+    items = Item.query.filter_by(location_id=location).all()
+
+    item_list = []
+
+    for item in items:
+        itemObj = {}
+        itemObj['id'] = item.id
+        itemObj['name'] = item.name
+        item_list.append(itemObj)
+
+    return jsonify({'items' : item_list})
