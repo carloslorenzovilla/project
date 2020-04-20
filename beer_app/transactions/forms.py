@@ -4,8 +4,8 @@ from wtforms import SubmitField,SelectField
 from wtforms.validators import DataRequired
 
 class PostTransactionForm(FlaskForm):
-    zone = SelectField(u'Neighborhood',coerce=int,validators=[DataRequired()])
-    location = SelectField(u'Brewery',coerce=int,validators=[DataRequired()], id='location')
-    item = SelectField(u'Beer', coerce=int, validators=[DataRequired()])
+    zone = SelectField('Neighborhood',coerce=int,validators=[DataRequired()])
+    location = SelectField('Brewery',coerce=int)
+    item = SelectField('Beer', coerce=int, validators=[DataRequired()])
     submit = SubmitField('Post')
 

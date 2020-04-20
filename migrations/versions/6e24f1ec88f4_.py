@@ -1,8 +1,8 @@
-"""update
+"""empty message
 
-Revision ID: 3772b4f4d002
+Revision ID: 6e24f1ec88f4
 Revises: 
-Create Date: 2020-04-17 12:45:26.221914
+Create Date: 2020-04-19 17:49:20.011405
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '3772b4f4d002'
+revision = '6e24f1ec88f4'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -36,18 +36,15 @@ def upgrade():
     op.create_index(op.f('ix_zones_name'), 'zones', ['name'], unique=False)
     op.create_table('locations',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('name', sa.String(length=64), nullable=False),
-    sa.Column('address', sa.String(length=64), nullable=False),
-    sa.Column('phone', sa.String(length=10), nullable=False),
-    sa.Column('website', sa.String(length=64), nullable=False),
+    sa.Column('name', sa.String(length=64), nullable=True),
+    sa.Column('address', sa.String(length=64), nullable=True),
+    sa.Column('phone', sa.String(length=10), nullable=True),
+    sa.Column('website', sa.String(length=64), nullable=True),
     sa.Column('zone_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['zone_id'], ['zones.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-    op.create_index(op.f('ix_locations_address'), 'locations', ['address'], unique=False)
     op.create_index(op.f('ix_locations_name'), 'locations', ['name'], unique=False)
-    op.create_index(op.f('ix_locations_phone'), 'locations', ['phone'], unique=False)
-    op.create_index(op.f('ix_locations_website'), 'locations', ['website'], unique=False)
     op.create_table('items',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=64), nullable=False),
@@ -92,10 +89,7 @@ def downgrade():
     op.drop_index(op.f('ix_items_ibu'), table_name='items')
     op.drop_index(op.f('ix_items_abv'), table_name='items')
     op.drop_table('items')
-    op.drop_index(op.f('ix_locations_website'), table_name='locations')
-    op.drop_index(op.f('ix_locations_phone'), table_name='locations')
     op.drop_index(op.f('ix_locations_name'), table_name='locations')
-    op.drop_index(op.f('ix_locations_address'), table_name='locations')
     op.drop_table('locations')
     op.drop_index(op.f('ix_zones_name'), table_name='zones')
     op.drop_table('zones')

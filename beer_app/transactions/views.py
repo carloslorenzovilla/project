@@ -8,7 +8,7 @@ transactions = Blueprint('transactions', __name__)
 
 #log a beer
 @transactions.route('/post_transaction',methods=['GET','POST'])
-@login_required
+#@login_required
 def post_transaction():
 
     form = PostTransactionForm()
@@ -26,30 +26,30 @@ def post_transaction():
     
     return render_template('transactions.html',form=form)
 
-@transactions.route('/location/<zone>')
-def location(zone):
-    locations = Location.query.filter_by(zone_id=zone).all()
+# @transactions.route('/location/<zone>')
+# def location(zone):
+#     locations = Location.query.filter_by(zone_id=zone).all()
 
-    location_list = []
+#     location_list = []
 
-    for location in locations:
-        locationObj = {}
-        locationObj['id'] = location.id
-        locationObj['name'] = location.name
-        location_list.append(locationObj)
+#     for location in locations:
+#         locationObj = {}
+#         locationObj['id'] = location.id
+#         locationObj['name'] = location.name
+#         location_list.append(locationObj)
 
-    return jsonify({'locations' : location_list})
+#     return jsonify({'locations' : location_list})
 
-@transactions.route('/item/<location>')
-def item(location):
-    items = Item.query.filter_by(location_id=location).all()
+# @transactions.route('/item/<location>')
+# def item(location):
+#     items = Item.query.filter_by(location_id=location).all()
 
-    item_list = []
+#     item_list = []
 
-    for item in items:
-        itemObj = {}
-        itemObj['id'] = item.id
-        itemObj['name'] = item.name
-        item_list.append(itemObj)
+#     for item in items:
+#         itemObj = {}
+#         itemObj['id'] = item.id
+#         itemObj['name'] = item.name
+#         item_list.append(itemObj)
 
-    return jsonify({'items' : item_list})
+#     return jsonify({'items' : item_list})

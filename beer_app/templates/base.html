@@ -1,3 +1,4 @@
+<!-- templates/base.html -->
 <!DOCTYPE html>
 <html lang="en" dir='ltr'>
 <head>
@@ -39,6 +40,13 @@
         <li class='nav-link'>
             <a href="{{url_for('users.logout')}}">Logout</a>
         </li>
+        <li class='nav-link'>
+            <a href="{{url_for('zones.add_zone')}}">Add Zone</a>
+        </li>
+        <li class='nav-link'>
+            <a href="{{url_for('locations.add_location')}}">Add Location</a>
+        </li>
+
         
         {% else %}
         

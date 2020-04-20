@@ -1,3 +1,4 @@
+<!-- templates/transactions.html -->
 {% extends "base.html" %}
 {% block content %}
 
@@ -10,19 +11,19 @@
 </form>
 <script>
     let zone_select = document.getElementById('zone');
-    let location_select = document.getElementById('location');
-    let item_select = document.getElementById('item');
+    zone_select.onchange = function () {
+             zone = zone_select.value;
+             alert(zone)
+         }
 
-    
-   zone_select.onchange = function () {
-            zone = zone_select.value;
-            alert(zone)
-        }
-    
-    location_select.onchange = function(){
+    let location_select = document.getElementById('location');
+    location_select.onchange = function (){
             location = location_select.value;
             alert(location)
         }
+
+    
+    
         
         //     fetch('/location/' + zone).then(function(response) {
             
@@ -57,6 +58,7 @@
                                     //     });
                                     // });
          //}
+    let item_select = document.getElementById('item');
     item_select.onchange=function(){
         item=item_select.value;
         alert(item)

@@ -41,6 +41,9 @@ class Zone(db.Model):
     name = db.Column(db.String(64),index=True)
     locations = db.relationship('Location',backref='zone')
 
+    def __init__(self,name):
+        self.name = name
+
     def __repr__(self):
         return f"{self.name}"
 
@@ -52,12 +55,19 @@ class Location(db.Model):
     zones = db.relationship(Zone)
 
     id = db.Column(db.Integer,primary_key=True)
-    name = db.Column(db.String(64),nullable=False,index=True)
-    address = db.Column(db.String(64),nullable=True,index=True)
-    phone = db.Column(db.String(10),nullable=True,index=True)
-    website = db.Column(db.String(64),nullable=True,index=True)
+    name = db.Column(db.String(64),index=True)
+    address = db.Column(db.String(64))
+    phone = db.Column(db.String(10))
+    website = db.Column(db.String(64))
     zone_id = db.Column(db.Integer,db.ForeignKey('zones.id'),nullable=False)
     items = db.relationship('Item',backref='location')
+
+    def __init__(self,name,zone_id):
+        self.name = name
+        self.address = None
+        self.phone = None
+        self.website = None
+        self.zone_id = zone_id
 
     def __repr__(self):
         return f"{self.name} -- {self.address} -- {self.phone} -- {self.website}"
