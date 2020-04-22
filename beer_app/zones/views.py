@@ -1,4 +1,5 @@
-from flask import render_template,url_for,flash,request,redirect,Blueprint
+# beer_app/zones/views.py
+from flask import render_template,url_for,request,redirect,Blueprint
 from flask_login import current_user,login_required
 from beer_app import db
 from beer_app.models import Zone

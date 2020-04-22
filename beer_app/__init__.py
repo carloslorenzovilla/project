@@ -33,15 +33,15 @@ login_manager.login_view = 'users.login'
 ####################
 
 from beer_app.core.views import core
-from beer_app.users.views import users
-from beer_app.transactions.views import transactions
 from beer_app.zones.views import zones
 from beer_app.locations.views import locations
+from beer_app.users.views import users
+from beer_app.transactions.views import transactions
 from beer_app.error_pages.handlers import error_pages
 
 app.register_blueprint(core)
-app.register_blueprint(users)
-app.register_blueprint(transactions)
 app.register_blueprint(zones)
 app.register_blueprint(locations)
+app.register_blueprint(users)
+app.register_blueprint(transactions)
 app.register_blueprint(error_pages)

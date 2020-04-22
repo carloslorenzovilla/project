@@ -5,63 +5,48 @@
 <form method="POST">
     {{form.hidden_tag()}}
     {{form.zone.label}} {{form.zone}} <br>
-    {{form.location.label}} {{form.location}} <br>
+    {{form.loc.label}} {{form.loc}} <br>
     {{form.item.label}} {{form.item}} <br>
     {{form.submit()}}
 </form>
+
 <script>
     let zone_select = document.getElementById('zone');
-    zone_select.onchange = function () {
-             zone = zone_select.value;
-             alert(zone)
-         }
-
-    let location_select = document.getElementById('location');
-    location_select.onchange = function (){
-            location = location_select.value;
-            alert(location)
-        }
-
-    
-    
-        
-        //     fetch('/location/' + zone).then(function(response) {
-            
-            //         response.json().then(function(data) {
-                //             let optionHTML = '';
-                
-                //             for (let location of data.locations) {
-                    //                 optionHTML += '<option value="' + location.id + '">' + location.name + '</option>';
-                    //             }
-                    
-                    //             location_select.innerHTML = optionHTML;
-                    
-                    //         });
-                    //     });
-                    // }
-                    
-                    // location_select.onchange = function() {
-                        //     location = location_select.value;
-                        //     alert(location)
-                        
-                        // fetch('/item/' + location).then(function (response) {
-                            
-                            //     response.json().then(function (data) {
-                                //         let optionHTML = '';
-                                
-                                //         for (let item of data.items) {
-                                    //             optionHTML += '<option value="' + item.id + '">' + item.name + '</option>';
-                                    //         }
-                                    
-                                    //         item_select.innerHTML = optionHTML;
-                                    
-                                    //     });
-                                    // });
-         //}
+    let loc_select = document.getElementById('loc');
     let item_select = document.getElementById('item');
-    item_select.onchange=function(){
-        item=item_select.value;
-        alert(item)
+    
+    zone_select.onchange = function () {
+        zone = zone_select.value;
+        
+        fetch('/loc/' + zone).then(function(response) {
+        
+            response.json().then(function(data) {
+                let optionHTML = '';
+    
+                for (let loc of data.locs) {
+                        optionHTML += '<option value="' + loc.id + '">' + loc.name + '</option>';
+                }
+        
+                loc_select.innerHTML = optionHTML;
+            });
+        });
+    
+    loc_select.onchange=function(){
+        loc=loc_select.value;
+        
+        fetch('/item/' + loc).then(function (response) {
+
+            response.json().then(function (data) {
+                let optionHTML = '';
+
+                for (let item of data.items) {
+                    optionHTML += '<option value="' + item.id + '">' + item.name + '</option>';
+                }
+
+                item_select.innerHTML = optionHTML;
+            });
+        });
     }
- </script>
+    }
+</script>
 {% endblock %}
