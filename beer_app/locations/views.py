@@ -2,7 +2,7 @@
 from flask import render_template,url_for,request,redirect,Blueprint
 from flask_login import current_user,login_required
 from beer_app import db
-from beer_app.models import Location
+from beer_app.models import Location,Zone
 from beer_app.locations.forms import LocationForm
 
 locations = Blueprint('locations',__name__)
@@ -11,6 +11,7 @@ locations = Blueprint('locations',__name__)
 @login_required
 def add_location():
     form = LocationForm()
+    form.zone_id.choices = [(zone.id,zone.name) for zone in Zone.query.order_by('name')]
 
     if form.validate_on_submit():
         location = Location(name=form.name.data,

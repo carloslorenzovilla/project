@@ -9,7 +9,7 @@ transactions = Blueprint('transactions', __name__)
 
 #log a beer
 @transactions.route('/post_transaction',methods=['GET','POST'])
-#@login_required
+@login_required
 def post_transaction():
 
     form = PostTransactionForm()

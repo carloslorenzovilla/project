@@ -1,0 +1,16 @@
+<!-- templates/item.html -->
+{% extends "base.html" %}
+{% block content %}
+
+<form method="POST">
+    {{form.hidden_tag()}}
+    {{form.location.label}}{{form.location}} <br>
+    {{form.name.label}} {{form.name}}<br>
+    {{form.style.label}} {{form.style}}<br>
+    {{form.abv.label}} {{form.abv}}<br>
+    {{form.ibu.label}} {{form.ibu}}<br>
+    {{form.submit()}}
+</form>
+
+{% endblock %}
+
