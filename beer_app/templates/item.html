@@ -2,15 +2,45 @@
 {% extends "base.html" %}
 {% block content %}
 
-<form method="POST">
-    {{form.hidden_tag()}}
-    {{form.location.label}}{{form.location}} <br>
-    {{form.name.label}} {{form.name}}<br>
-    {{form.style.label}} {{form.style}}<br>
-    {{form.abv.label}} {{form.abv}}<br>
-    {{form.ibu.label}} {{form.ibu}}<br>
-    {{form.submit()}}
-</form>
+<div class='jumbotron'>
+    <h1>Add a Beer to the Database</h1>
+</div>
+
+<div class='container'>
+    <form method="POST" action="" enctype="multipart/form-data">
+        
+        {{form.hidden_tag()}}
+        
+        <div class='form-group'>
+            {{form.location.label(class='form-group')}}
+            {{form.location(class='form-control')}}
+        </div>
+        
+        <div class='form-group'>
+            {{form.name.label(class='form-group')}} 
+            {{form.name(class='form-control')}}
+        </div>
+
+        <div class='form-group'>
+            {{form.style.label(class='form-group')}} 
+            {{form.style(class='form-control')}}
+        </div>
+
+        <div class='form-group'>
+            {{form.abv.label(class='form-group')}} 
+            {{form.abv(class='form-control')}}
+        </div>
+
+        <div class='form-group'>
+            {{form.ibu.label(class='form-group')}} 
+            {{form.ibu(class='form-control')}}
+        </div>
+
+        <div class='form-group'>
+            {{form.submit(class='btn btn-primary')}}
+        </div>
+    </form>
+</div>
 
 {% endblock %}
 

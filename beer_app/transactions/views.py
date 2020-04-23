@@ -21,7 +21,7 @@ def post_transaction():
                                         in Location.query.order_by('name')]
     form.item.choices=[(item.id, item.name) 
                                         for item 
-                                        in Item.query.order_by('id')]
+                                        in Item.query.order_by('location_id')]
 
     if form.validate_on_submit():
         transaction = Transaction(user_id=current_user.id,
@@ -31,6 +31,24 @@ def post_transaction():
         return redirect(url_for('transactions.post_transaction'))
     
     return render_template('transactions.html',form=form)
+
+#get recommendation
+@transactions.route('/get_recommendation',methods=['GET','POST'])
+@login_required
+def get_recommendation():
+    
+    form = PostTransactionForm()
+    form.zone.choices = [(zone.id, zone.name)
+                         for zone
+                         in Zone.query.order_by('name')]
+    form.loc.choices = [(loc.id, loc.name)
+                        for loc
+                        in Location.query.order_by('name')]
+
+    if form.validate_on_submit():
+        return redirect(url_for('transactions.get_recommendation'))
+
+    return render_template('recommendations.html',form=form)
 
 @transactions.route('/loc/<zone>')
 def location(zone):

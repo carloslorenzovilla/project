@@ -2,11 +2,28 @@
 {% extends "base.html" %}
 {% block content %}
 
-<form method="POST">
-    {{form.hidden_tag()}}
-    {{form.name.label}}{{form.name}} <br>
-    {{form.zone_id.label}}{{form.zone_id}} <br>
-    {{form.submit()}}
+<div class='jumbotron'>
+    <h1>Add a Brewery to the Database</h1>
+</div>
+
+<div class='container'>
+    <form method="POST" action="" enctype="multipart/form-data">
+
+        {{form.hidden_tag()}}
+
+        <div class='form-group'>
+            {{form.name.label(class='form-group')}}
+            {{form.name(class='form-control')}}
+        </div>
+
+        <div class='form-group'>
+            {{form.zone_id.label(class='form-group')}}
+            {{form.zone_id(class='form-control')}}
+        </div>
+
+        <div class='form-group'>
+            {{form.submit(class='btn btn-primary')}}
+        </div>
 </form>
 
 {% endblock %}
