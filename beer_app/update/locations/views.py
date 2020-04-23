@@ -1,9 +1,9 @@
-# beer_app/locations/views.py
+# beer_app/update/locations/views.py
 from flask import render_template,url_for,request,redirect,Blueprint
 from flask_login import current_user,login_required
 from beer_app import db
 from beer_app.models import Location,Zone
-from beer_app.locations.forms import LocationForm
+from beer_app.update.locations.forms import LocationForm
 
 locations = Blueprint('locations',__name__)
 

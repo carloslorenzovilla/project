@@ -4,13 +4,14 @@ from flask_login import current_user,login_required
 from beer_app import db
 from beer_app.models import Transaction,Zone,Location,Item
 from beer_app.transactions.forms import PostTransactionForm
+#from beer_app.rec_eng.generate import generate_rec
 
 transactions = Blueprint('transactions', __name__)
 
 #log a beer
-@transactions.route('/post_transaction',methods=['GET','POST'])
+@transactions.route('/log_item',methods=['GET','POST'])
 @login_required
-def post_transaction():
+def log_item():
 
     form = PostTransactionForm()
     form.zone.choices = [(zone.id, zone.name) 
@@ -28,14 +29,14 @@ def post_transaction():
                                                 item_id=form.item.data)
         db.session.add(transaction)
         db.session.commit()
-        return redirect(url_for('transactions.post_transaction'))
+        return redirect(url_for('transactions.log_item'))
     
-    return render_template('transactions.html',form=form)
+    return render_template('log_item.html',form=form)
 
 #get recommendation
-@transactions.route('/get_recommendation',methods=['GET','POST'])
+@transactions.route('/get_rec',methods=['GET','POST'])
 @login_required
-def get_recommendation():
+def get_rec():
     
     form = PostTransactionForm()
     form.zone.choices = [(zone.id, zone.name)
@@ -46,9 +47,20 @@ def get_recommendation():
                         in Location.query.order_by('name')]
 
     if form.validate_on_submit():
-        return redirect(url_for('transactions.get_recommendation'))
+        # get_rec = generate_rec(user_id=current_user.id,
+        #                                zone_id=form.zone_id.data,
+        #                                location_id=form.location_id.data)
+        # 
+        # rec will then return a list of three recommendations
+        #
+        # recs = Recommendations(user_id = current_user.id,
+        #                                            item_id = get_rec.list)
+        # 
+        # db.session.add(recs)
+        # db.session.commit()
+        return redirect(url_for('transactions.get_rec'))
 
-    return render_template('recommendations.html',form=form)
+    return render_template('rec.html',form=form)
 
 @transactions.route('/loc/<zone>')
 def location(zone):

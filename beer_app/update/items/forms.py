@@ -1,4 +1,4 @@
-# beer_app/items/forms.py
+# beer_app/update//items/forms.py
 from flask_wtf import FlaskForm
 from wtforms import StringField,SubmitField,IntegerField,SelectField
 from wtforms.validators import DataRequired

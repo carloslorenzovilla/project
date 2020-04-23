@@ -1,9 +1,9 @@
-# beer_app/items/views.py
+# beer_app/update/items/views.py
 from flask import render_template,url_for,request,redirect,Blueprint
 from flask_login import current_user,login_required
 from beer_app import db
 from beer_app.models import Item,Location
-from beer_app.items.forms import ItemForm
+from beer_app.update.items.forms import ItemForm
 
 items = Blueprint('items',__name__)
 

@@ -3,7 +3,7 @@ from flask import render_template,url_for,request,redirect,Blueprint
 from flask_login import current_user,login_required
 from beer_app import db
 from beer_app.models import Zone
-from beer_app.zones.forms import ZoneForm
+from beer_app.update.zones.forms import ZoneForm
 
 zones = Blueprint('zones',__name__)
 
