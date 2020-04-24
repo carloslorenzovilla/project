@@ -1,17 +1,17 @@
 # users/views.py
-from flask import render_template,url_for,flash,redirect,request,Blueprint
-from flask_login import login_user,current_user,logout_user,login_required
+from flask import render_template, url_for, flash, redirect, request, Blueprint
+from flask_login import login_user, current_user, logout_user, login_required
 from beer_app import db
-from beer_app.models import User #Transaction #Recommendation
-from beer_app.users.forms import RegistrationForm,LoginForm,UpdateUserForm
+from beer_app.models import User, Log  # Rec
+from beer_app.users.forms import RegistrationForm, LoginForm, UpdateUserForm
 from beer_app.users.picture_handler import add_profile_pic
 
-users = Blueprint('users',__name__)
+users = Blueprint('users', __name__)
 
 # register
-@users.route('/register',methods=['GET','POST'])
+@users.route('/register', methods=['GET', 'POST'])
 def register():
-    
+
     form = RegistrationForm()
 
     if form.validate_on_submit():
@@ -24,10 +24,10 @@ def register():
         flash('Thanks for registering!')
         return redirect(url_for('users.login'))
 
-    return render_template('register.html',form=form)
+    return render_template('register.html', form=form)
 
 # login
-@users.route('/login',methods=['GET','POST'])
+@users.route('/login', methods=['GET', 'POST'])
 def login():
 
     form = LoginForm()
@@ -40,17 +40,17 @@ def login():
             login_user(user)
             flash('Log in Success!')
 
-            # Navigates user back to the page that redirected to login. 
-            # If user navigates to login page via the navbar link, they 
+            # Navigates user back to the page that redirected to login.
+            # If user navigates to login page via the navbar link, they
             # will be redirected to home page.
             next = request.args.get('next')
 
-            if next == None or not next[0] =='/':
+            if next == None or not next[0] == '/':
                 next = url_for('core.index')
 
             return redirect(next)
-    
-    return render_template('login.html',form=form)
+
+    return render_template('login.html', form=form)
 
 # logout
 @users.route('/logout')
@@ -59,7 +59,7 @@ def logout():
     return redirect(url_for('core.index'))
 
 # account
-@users.route('/account',methods=['GET','POST'])
+@users.route('/account', methods=['GET', 'POST'])
 @login_required
 def account():
 
@@ -68,7 +68,7 @@ def account():
 
         if form.picture.data:
             username = current_user.username
-            pic = add_profile_pic(form.picture.data,username)
+            pic = add_profile_pic(form.picture.data, username)
             current_user.profile_image = pic
 
         current_user.name = form.username.data
@@ -79,15 +79,13 @@ def account():
 
     elif request.method == 'GET':
         form.username.data = current_user.username
-        form.email.data  = current_user.email
+        form.email.data = current_user.email
 
-    profile_image = url_for('static',filename='profile_pics/'+current_user.profile_image)
-    return render_template('account.html',profile_image=profile_image,form=form)
+    profile_image = url_for(
+        'static', filename='profile_pics/'+current_user.profile_image)
+    return render_template('account.html', profile_image=profile_image, form=form)
 
-# # transactions
-# @users.route("/<username>")
-# def transactions(username):
-#     pass
+
 
 # # recommendations
 # @users.route("/<username>")

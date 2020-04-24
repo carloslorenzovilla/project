@@ -18,51 +18,51 @@
     <title>Beer App</title>
 </head>
 <body>
-    <ul class='nav'>
+    <ul class='nav sticky-top bg-secondary' >
         <li class='nav-link'>
-            <a href="{{url_for('core.index')}}">Home</a>
+            <a class='text-light' href="{{url_for('core.index')}}">Home</a>
         </li>
         <li class='nav-link'>
-            <a href="{{url_for('core.info')}}">About</a>
+            <a class='text-light' href="{{url_for('core.info')}}">About</a>
         </li>
         
         {% if current_user.is_authenticated %}
         
         <li class='nav-link'>
-            <a href="{{url_for('users.account')}}">Account</a>
+            <a class='text-light' href="{{url_for('users.account')}}">Account</a>
         </li>
         <li class='nav-link'>
-            <a href="{{url_for('transactions.get_rec')}}">Get Rec!</a>
+            <a class='text-light' href="{{url_for('transactions.get_rec')}}">Get Rec!</a>
         </li>
         <li class='nav-link'>
-            <a href="{{url_for('transactions.log_item')}}">Log a Beer</a>
+            <a class='text-light' href="{{url_for('transactions.log_item')}}">Log a Beer</a>
         </li>
         
         {% if current_user.username=='admin' %}
         
         <li class='nav-link'>
-            <a href="{{url_for('zones.add_zone')}}">Add Neighborhood</a>
+            <a class='text-light' href="{{url_for('zones.add_zone')}}">Add Neighborhood</a>
         </li>
         <li class='nav-link'>
-            <a href="{{url_for('locations.add_location')}}">Add Brewery</a>
+            <a class='text-light' href="{{url_for('locations.add_location')}}">Add Brewery</a>
         </li>
         <li class='nav-link'>
-            <a href="{{url_for('items.add_item')}}">Add Beer</a>
+            <a class='text-light' href="{{url_for('items.add_item')}}">Add Beer</a>
         </li>
         
         {% endif %}
         
         <li class='nav-link'>
-            <a href="{{url_for('users.logout')}}">Logout</a>
+            <a class='text-light' href="{{url_for('users.logout')}}">Logout</a>
         </li>
 
         {% else %}
         
         <li class='nav-link'>
-            <a href="{{url_for('users.login')}}">Log In</a>
+            <a class='text-light' href="{{url_for('users.login')}}">Log In</a>
         </li>
         <li class='nav-link'>
-            <a href="{{url_for('users.register')}}">Register</a>
+            <a class='text-light' href="{{url_for('users.register')}}">Register</a>
         </li>
         
         {% endif %}
