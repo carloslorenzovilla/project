@@ -3,7 +3,7 @@ from flask import render_template, url_for, request, redirect, Blueprint, jsonif
 from flask_login import current_user, login_required
 from beer_app import db
 from beer_app.models import Log, Rec, Zone, Location, Item
-from beer_app.actions.forms import ActionForm
+from beer_app.actions.forms import RecActionForm,LogActionForm
 from beer_app.rec_eng.functions import generate_rec
 
 actions = Blueprint('actions', __name__)
@@ -13,7 +13,7 @@ actions = Blueprint('actions', __name__)
 @login_required
 def log_item():
 
-    form = ActionForm()
+    form = LogActionForm()
     form.zone.choices = [(zone.id, zone.name)
                          for zone
                          in Zone.query.order_by('name')]
@@ -42,7 +42,7 @@ def log_item():
 @login_required
 def get_rec():
 
-    form = ActionForm()
+    form = RecActionForm()
     form.zone.choices = [(zone.id, zone.name)
                          for zone
                          in Zone.query.order_by('name')]

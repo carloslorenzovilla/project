@@ -4,8 +4,10 @@ from wtforms import SubmitField, SelectField
 from wtforms.validators import DataRequired
 
 
-class ActionForm(FlaskForm):
+class RecActionForm(FlaskForm):
     zone = SelectField('Neighborhood', coerce=int, validators=[DataRequired()])
     loc = SelectField('Brewery', coerce=int, validators=[DataRequired()])
-    item = SelectField('Beer', coerce=int, validators=[DataRequired()])
     submit = SubmitField('Get Rec!')
+
+class LogActionForm(RecActionForm):
+    item = SelectField('Beer', coerce=int, validators=[DataRequired()])
