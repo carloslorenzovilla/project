@@ -51,11 +51,9 @@ def get_rec():
                         in Location.query.order_by('name')]
 
     if form.validate_on_submit():
-        # get_rec = generate_rec(user_id=current_user.id,
-        #                        zone_id=form.zone.data,
-        #                        location_id=form.loc.data)
-
-        get_rec = 2
+        get_rec = generate_rec(user_id=current_user.id,
+                               zone_id=form.zone.data,
+                               location_id=form.loc.data)
 
         recs = Rec(user_id=current_user.id,
                             item_id=get_rec)
@@ -66,7 +64,7 @@ def get_rec():
 
     page = request.args.get('page', 1, type=int)
     user_recs = Rec.query.filter_by(user_id=current_user.id).order_by(
-        Rec.date.desc()).paginate(page=page, per_page=3)
+        Rec.date.desc()).paginate(page=page, per_page=4)
 
     return render_template('rec.html', form=form, user_recs=user_recs)
 

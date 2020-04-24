@@ -86,8 +86,3 @@ def account():
     return render_template('account.html', profile_image=profile_image, form=form)
 
 
-
-# # recommendations
-# @users.route("/<username>")
-# def recs(username):
-#     pass
