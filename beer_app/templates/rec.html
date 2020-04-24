@@ -42,15 +42,14 @@
 
 <div class="fixed-bottom">
     <nav aria-label='User Recommendation History'>
-        <ul class='pagination sticky-bottom justify-content-center'>
+        <ul class='pagination sticky-bottom justify-content-center bg-secondary'>
             {% for page_num in user_recs.iter_pages(left_edge=1,
-                right_edge=1,
-                left_current=5,
-                right_current=5) %}
+                                                                                right_edge=1,
+                                                                                left_current=5,
+                                                                                right_current=5) %}
                 {% if user_recs.page == page_num %}
                 <li class='page-item active' aria-current="page">
                     <span class="page-link" href="{{url_for('transactions.get_rec',page=page_num)}}">{{page_num}}
-                        <span class="sr-only">(current)</span>
                     </span>
                 </li>
                 {% else %}
