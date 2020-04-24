@@ -1,3 +1,4 @@
+# beer_app/init.py
 import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
@@ -13,11 +14,12 @@ app.config['SECRET_KEY'] = 'password3X'
 ########################
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+os.path.join(basedir,'data.sqlite')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
+    os.path.join(basedir, 'data.sqlite')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
-Migrate(app,db)
+Migrate(app, db)
 
 ######################
 #### LOGIN CONFIG ####
@@ -37,7 +39,7 @@ from beer_app.update.zones.views import zones
 from beer_app.update.locations.views import locations
 from beer_app.update.items.views import items
 from beer_app.users.views import users
-from beer_app.transactions.views import transactions
+from beer_app.actions.views import actions
 from beer_app.error_pages.handlers import error_pages
 
 app.register_blueprint(core)
@@ -45,5 +47,5 @@ app.register_blueprint(zones)
 app.register_blueprint(locations)
 app.register_blueprint(items)
 app.register_blueprint(users)
-app.register_blueprint(transactions)
+app.register_blueprint(actions)
 app.register_blueprint(error_pages)

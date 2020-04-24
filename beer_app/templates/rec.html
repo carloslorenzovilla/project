@@ -30,7 +30,7 @@
 {% if user_recs.items %}
 <div class='container'>
     <h4 style='text-align:center'> {{current_user.username}} Rec History</h4>
-    
+
     {% for post in user_recs.items %}
     <div class='card'>
         <div class='card-body'>
@@ -47,22 +47,22 @@
                                                                                 right_edge=1,
                                                                                 left_current=5,
                                                                                 right_current=5) %}
-                {% if user_recs.page == page_num %}
-                <li class='page-item active' aria-current="page">
-                    <span class="page-link" href="{{url_for('transactions.get_rec',page=page_num)}}">{{page_num}}
-                    </span>
-                </li>
-                {% else %}
-                <li class='page-item'>
-                    <a class='page-link' href="{{url_for('transactions.get_rec',page=page_num)}}">{{page_num}}</a>
-                </li>
-                {% endif %}
-                {% endfor %}
-            </ul>
-        </nav>
-    </div>
-    {% endif %}
-    
+            {% if user_recs.page == page_num %}
+            <li class='page-item active' aria-current="page">
+                <span class="page-link" href="{{url_for('actions.get_rec',page=page_num)}}">{{page_num}}
+                </span>
+            </li>
+            {% else %}
+            <li class='page-item'>
+                <a class='page-link' href="{{url_for('actions.get_rec',page=page_num)}}">{{page_num}}</a>
+            </li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+    </nav>
+</div>
+{% endif %}
+
 <script>
     let zone_select = document.getElementById('zone');
     let loc_select = document.getElementById('loc');

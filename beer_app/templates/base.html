@@ -1,10 +1,10 @@
 <!-- templates/base.html -->
 <!DOCTYPE html>
 <html lang="en" dir='ltr'>
+
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" 
-        crossorigin="anonymous">
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
         crossorigin="anonymous"></script>
@@ -17,29 +17,30 @@
     <meta charset="UTF-8">
     <title>Beer App</title>
 </head>
+
 <body>
-    <ul class='nav sticky-top bg-primary' >
+    <ul class='nav sticky-top bg-primary'>
         <li class='nav-link'>
             <a class='text-light' href="{{url_for('core.index')}}">Home</a>
         </li>
         <li class='nav-link'>
             <a class='text-light' href="{{url_for('core.info')}}">About</a>
         </li>
-        
+
         {% if current_user.is_authenticated %}
-        
+
         <li class='nav-link'>
             <a class='text-light' href="{{url_for('users.account')}}">Account</a>
         </li>
         <li class='nav-link'>
-            <a class='text-light' href="{{url_for('transactions.get_rec')}}">Get Rec!</a>
+            <a class='text-light' href="{{url_for('actions.get_rec')}}">Get Rec!</a>
         </li>
         <li class='nav-link'>
-            <a class='text-light' href="{{url_for('transactions.log_item')}}">Log a Beer</a>
+            <a class='text-light' href="{{url_for('actions.log_item')}}">Log a Beer</a>
         </li>
-        
+
         {% if current_user.username=='admin' %}
-        
+
         <li class='nav-link'>
             <a class='text-light' href="{{url_for('zones.add_zone')}}">Add Neighborhood</a>
         </li>
@@ -49,28 +50,29 @@
         <li class='nav-link'>
             <a class='text-light' href="{{url_for('items.add_item')}}">Add Beer</a>
         </li>
-        
+
         {% endif %}
-        
+
         <li class='nav-link'>
             <a class='text-light' href="{{url_for('users.logout')}}">Logout</a>
         </li>
 
         {% else %}
-        
+
         <li class='nav-link'>
             <a class='text-light' href="{{url_for('users.login')}}">Log In</a>
         </li>
         <li class='nav-link'>
             <a class='text-light' href="{{url_for('users.register')}}">Register</a>
         </li>
-        
+
         {% endif %}
     </ul>
     <div class='container'>
         {% block content %}
-        
+
         {% endblock %}
     </div>
 </body>
+
 </html>

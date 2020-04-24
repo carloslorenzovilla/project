@@ -1,19 +1,19 @@
-# beer_app/transactions/views.py
+# beer_app/actions/views.py
 from flask import render_template, url_for, request, redirect, Blueprint, jsonify
 from flask_login import current_user, login_required
 from beer_app import db
 from beer_app.models import Log, Rec, Zone, Location, Item
-from beer_app.transactions.forms import PostLogForm
-#from beer_app.rec_eng.generate import generate_rec
+from beer_app.actions.forms import ActionForm
+from beer_app.rec_eng.functions import generate_rec
 
-transactions = Blueprint('transactions', __name__)
+actions = Blueprint('actions', __name__)
 
 # log a beer
-@transactions.route('/log_item', methods=['GET', 'POST'])
+@actions.route('/log_item', methods=['GET', 'POST'])
 @login_required
 def log_item():
 
-    form = PostLogForm()
+    form = ActionForm()
     form.zone.choices = [(zone.id, zone.name)
                          for zone
                          in Zone.query.order_by('name')]
@@ -29,19 +29,20 @@ def log_item():
                           item_id=form.item.data)
         db.session.add(transaction)
         db.session.commit()
-        return redirect(url_for('transactions.log_item'))
+        return redirect(url_for('actions.log_item'))
 
-    page = request.args.get('page',1,type=int)
-    user_post_log = Log.query.filter_by(user_id=current_user.id).order_by(Log.date.desc()).paginate(page=page,per_page=3)
+    page = request.args.get('page', 1, type=int)
+    user_post_log = Log.query.filter_by(user_id=current_user.id).order_by(
+        Log.date.desc()).paginate(page=page, per_page=3)
 
-    return render_template('log_item.html',form=form,user_post_log=user_post_log)
+    return render_template('log_item.html', form=form, user_post_log=user_post_log)
 
 # get recommendation
-@transactions.route('/get_rec', methods=['GET', 'POST'])
+@actions.route('/get_rec', methods=['GET', 'POST'])
 @login_required
 def get_rec():
 
-    form = PostLogForm()
+    form = ActionForm()
     form.zone.choices = [(zone.id, zone.name)
                          for zone
                          in Zone.query.order_by('name')]
@@ -51,17 +52,17 @@ def get_rec():
 
     if form.validate_on_submit():
         # get_rec = generate_rec(user_id=current_user.id,
-        #                                zone_id=form.zone_id.data,
-        #                                location_id=form.location_id.data)
-        #
-        # rec will then return a list of three recommendations
-        #
-        # recs = Recs(user_id = current_user.id,
-        #                                            item_id = get_rec.list)
-        #
-        # db.session.add(recs)
-        # db.session.commit()
-        return redirect(url_for('transactions.get_rec'))
+        #                        zone_id=form.zone.data,
+        #                        location_id=form.loc.data)
+
+        get_rec = 2
+
+        recs = Rec(user_id=current_user.id,
+                            item_id=get_rec)
+
+        db.session.add(recs)
+        db.session.commit()
+        return redirect(url_for('actions.get_rec'))
 
     page = request.args.get('page', 1, type=int)
     user_recs = Rec.query.filter_by(user_id=current_user.id).order_by(
@@ -70,7 +71,7 @@ def get_rec():
     return render_template('rec.html', form=form, user_recs=user_recs)
 
 
-@transactions.route('/loc/<zone>')
+@actions.route('/loc/<zone>')
 def location(zone):
 
     location_list = [{'id': location.id, 'name': location.name}
@@ -80,7 +81,7 @@ def location(zone):
     return jsonify({'locs': location_list})
 
 
-@transactions.route('/item/<loc>')
+@actions.route('/item/<loc>')
 def item(loc):
 
     item_list = [{'id': item.id, 'name': item.name}
