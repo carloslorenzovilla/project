@@ -8,7 +8,7 @@ from beer_app.rec_eng.functions import generate_rec
 
 actions = Blueprint('actions', __name__)
 
-# log a beer
+# LOG A BEER
 @actions.route('/log_item', methods=['GET', 'POST'])
 @login_required
 def log_item():
@@ -37,7 +37,7 @@ def log_item():
 
     return render_template('log_item.html', form=form, user_post_log=user_post_log)
 
-# get recommendation
+# GET RECOMMENDATION
 @actions.route('/get_rec', methods=['GET', 'POST'])
 @login_required
 def get_rec():
