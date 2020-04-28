@@ -68,11 +68,11 @@ class Location(db.Model):
     zone_id = db.Column(db.Integer, db.ForeignKey('zones.id'), nullable=False)
     items = db.relationship('Item', backref='location')
 
-    def __init__(self, name, zone_id):
+    def __init__(self, name, address, phone, website, zone_id):
         self.name = name
-        self.address = None
-        self.phone = None
-        self.website = None
+        self.address = address
+        self.phone = phone
+        self.website = website
         self.zone_id = zone_id
 
     def __repr__(self):
