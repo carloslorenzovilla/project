@@ -1,0 +1,19 @@
+<!-- templates/add_location_csv.html -->
+{% extends "base.html" %}
+{% block content %}
+
+<div class='jumbotron'>
+    <h1>Add a Brewery Table to Database</h1>
+</div>
+
+<div class='container'>
+    <form method="POST" action="" enctype="multipart/form-data">
+
+        <div class='form-group'>
+            <h4>Upload a csv file:</h4> <input type='file' name='file'>
+            <input type='submit' value='Upload .csv'>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

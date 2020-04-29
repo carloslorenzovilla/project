@@ -1,0 +1,49 @@
+<!-- templates/add_location_form.html -->
+{% extends "base.html" %}
+{% block content %}
+
+<div class='jumbotron'>
+    <h1>Add a Brewery to the Database</h1>
+</div>
+
+<div class='container'>
+    <form method="POST" action="" enctype="multipart/form-data">
+
+        {{form.hidden_tag()}}
+
+        <div class='form-group'>
+            {{form.name.label(class='form-group')}}
+            {{form.name(class='form-control')}}
+        </div>
+
+        <div class='form-group'>
+            {{form.address.label(class='form-group')}}
+            {{form.address(class='form-control')}}
+        </div>
+
+        <div class='form-group'>
+            {{form.phone.label(class='form-group')}}
+            {{form.phone(class='form-control')}}
+        </div>
+        
+        <div class='form-group'>
+            {{form.website.label(class='form-group')}}
+            {{form.website(class='form-control')}}
+        </div>
+
+        <div class='form-group'>
+            {{form.zone_id.label(class='form-group')}}
+            {{form.zone_id(class='form-control')}}
+        </div>
+
+
+        <div class='form-group'>
+            {{form.submit(class='btn btn-secondary')}}
+        </div>
+</form>
+</div>
+<br>
+<h4><a href="{{url_for('update.add_location_csv')}}">Click here to upload .csv file</a></h4>
+
+{% endblock %}
+

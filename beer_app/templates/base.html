@@ -42,13 +42,13 @@
         {% if current_user.username=='admin' %}
 
         <li class='nav-link'>
-            <a class='text-light' href="{{url_for('update.add_zone')}}">Add Neighborhood</a>
+            <a class='text-light' href="{{url_for('update.add_zone_form')}}">Add Neighborhood</a>
         </li>
         <li class='nav-link'>
-            <a class='text-light' href="{{url_for('update.add_location')}}">Add Brewery</a>
+            <a class='text-light' href="{{url_for('update.add_location_form')}}">Add Brewery</a>
         </li>
         <li class='nav-link'>
-            <a class='text-light' href="{{url_for('update.add_item')}}">Add Beer</a>
+            <a class='text-light' href="{{url_for('update.add_item_form')}}">Add Beer</a>
         </li>
 
         {% endif %}

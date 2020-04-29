@@ -9,7 +9,7 @@ class ZoneForm(FlaskForm):
 
 class LocationForm(FlaskForm):
     name = StringField('Name')
-    address = StringField('Address')
+    address = StringField('Address, City, State, Zip')
     phone = StringField('Phone')
     website = StringField('Website')
     zone_id = SelectField('Neighborhood ID', coerce=int)

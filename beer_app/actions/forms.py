@@ -7,7 +7,7 @@ from wtforms.validators import DataRequired
 class RecActionForm(FlaskForm):
     zone = SelectField('Neighborhood', coerce=int, validators=[DataRequired()])
     loc = SelectField('Brewery', coerce=int, validators=[DataRequired()])
-    submit = SubmitField('Log Beer!')
+    submit = SubmitField('Submit!')
 
 class LogActionForm(RecActionForm):
     item = SelectField('Beer', coerce=int, validators=[DataRequired()])
