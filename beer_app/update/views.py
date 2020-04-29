@@ -22,7 +22,6 @@ def add_zone_form():
 
     return render_template('add_zone_form.html', form=form)
 
-
 @update.route('/add_zone_csv', methods=['GET', 'POST'])
 @login_required
 def add_zone_csv():
