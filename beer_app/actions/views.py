@@ -55,12 +55,14 @@ def get_rec():
                                zone_id=form.zone.data,
                                location_id=form.loc.data)
 
-        recs = Rec(user_id=current_user.id,
-                            item_id=get_rec)
+        for rec in get_rec:
+            recs = Rec(user_id=current_user.id,
+                                item_id=get_rec)
 
-        db.session.add(recs)
-        db.session.commit()
-        return redirect(url_for('actions.get_rec'))
+            db.session.add(recs)
+            db.session.commit()
+    
+    return redirect(url_for('actions.get_rec'))
 
     page = request.args.get('page', 1, type=int)
     user_recs = Rec.query.filter_by(user_id=current_user.id).order_by(
