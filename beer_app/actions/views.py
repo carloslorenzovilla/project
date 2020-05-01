@@ -4,7 +4,7 @@ from flask_login import current_user, login_required
 from beer_app import db
 from beer_app.models import Log, Rec, Zone, Location, Item
 from beer_app.actions.forms import RecActionForm,LogActionForm
-from beer_app.rec_eng.functions import generate_rec
+from beer_app.rec.functions import generate_rec
 
 actions = Blueprint('actions', __name__)
 
@@ -52,13 +52,12 @@ def get_rec():
 
     if form.validate_on_submit():
         get_rec = generate_rec(user_id=current_user.id,
-                               zone_id=form.zone.data,
-                               location_id=form.loc.data)
+                                            zone_id=form.zone.data,
+                                            location_id=form.loc.data)
 
         for rec in get_rec:
             recs = Rec(user_id=current_user.id,
-                                item_id=get_rec)
-
+                                item_id=rec)
             db.session.add(recs)
             db.session.commit()
     

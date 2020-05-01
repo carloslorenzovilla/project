@@ -8,16 +8,18 @@ class Rec():
         self.user_id = user_id
         self.zone_id = zone_id
         self.location_id = location_id
-        self.user_data = [item.item_id 
-                                    for item 
-                                    in Log.query.filter_by(
-                                        user_id=self.user_id).order_by(
-                                        Log.date.desc())
+        self.user_data =  [
+                                        item.item_id 
+                                        for item 
+                                        in Log.query.filter_by(
+                                            user_id=self.user_id).order_by(
+                                            Log.date.desc()
+                                        )
                                     ]
         self.engine = Rec_Engine(user_data=self.user_data)
     
+    #returns 2D array, ([style, affinity])
     def generate_rec(self):
-        #returns 2D array, ([style, affinity])
         affinity_vector = self.engine.affinity_vector()
         # use the affinity vector to determine the top category, find the maximum value from the second column
         category_id = max(affinity_vector([:,1]))

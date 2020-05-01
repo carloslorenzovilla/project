@@ -17,10 +17,10 @@ class Data_Matrix:
     FILE = 'Beer.csv'
 
     def __init__(self)
-        self.items, self.labels = csv_import()
-        self.keywords = keywords()
-        self.kw_matrix = gen_kw_matrix()
-        self.distance_matrix = distance_matrix()
+        self.items, self.labels = self.csv_import()
+        self.keywords = self.keywords()
+        self.kw_matrix = self.gen_kw_matrix()
+        self.distance_matrix = self.distance_matrix()
 
     @staticmethod
     def csv_import():
