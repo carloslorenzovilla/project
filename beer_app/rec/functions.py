@@ -30,10 +30,12 @@ class Get_Rec():
     def generate_rec(self):
         affinity_vector = self.engine.affinity_vector
         # use the affinity vector to determine the top category, find the maximum value from the second column
-        index = list(where(max(affinity_vector[1,:])))[0]
+        top_clusters = (list(where(
+                                self.engine.affinity_vector[1, :] == max(self.engine.affinity_vector[1, :])))[0])
         
-        category_id = int(affinity_vector[0,index[0]])
-        # yields a number
+        for cluster_id in top_clusters:
+            print(cluster_id)
+
 
         # print(self.zone_id)
         

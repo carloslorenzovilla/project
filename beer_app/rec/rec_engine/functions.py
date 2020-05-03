@@ -10,7 +10,8 @@ class Rec_Engine:
         self.user_data = user_data
         self.data = Data_Matrix()
         self.distance_matrix = self.data.distance_matrix
-        self.kw_matrix, self.num_clusters = self.master_kw_matrix()
+        self.kw_matrix, self.labels = self.master_kw_matrix()
+        self.num_clusters = len(self.labels)
         self.medoid_vectors = self.medoid_vector()
         self.affinity_vector = self.affinity_vector()
 
@@ -26,9 +27,9 @@ class Rec_Engine:
         # sort by cluster
         kw_matrix = self.data.kw_matrix[np.argsort(self.data.kw_matrix[:, 0])]
 
-        num_clusters = max(clusters.labels_ + 1)
+        labels = set(clusters.labels_)
 
-        return kw_matrix, num_clusters
+        return kw_matrix, labels
 
     # Calculate medoids of each cluster/genre, that is the item whose average distance
     # to all other items within a cluster is smallest. Returns array of corresponding
@@ -38,7 +39,7 @@ class Rec_Engine:
         cluster_assignments = [
                                                 list(np.where(self.kw_matrix[:, 0] == index)[0])
                                                 for index
-                                                in range(self.num_clusters)
+                                                in self.labels
                                              ]
 
         # medoids are meaningful only in the number of elements > 2
@@ -118,6 +119,7 @@ class Rec_Engine:
         affinity_vector = user_affinity_matrix / np.sum(user_affinity_matrix)
 
         labels = self.medoid_vectors[:,0]
+
 
         affinity_vector = np.vstack((labels,affinity_vector))
 
