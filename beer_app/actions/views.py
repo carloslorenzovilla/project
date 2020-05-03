@@ -4,7 +4,7 @@ from flask_login import current_user, login_required
 from beer_app import db
 from beer_app.models import Log, Rec, Zone, Location, Item
 from beer_app.actions.forms import RecActionForm,LogActionForm
-from beer_app.rec.functions import generate_rec
+from beer_app.rec.functions import Get_Rec
 
 actions = Blueprint('actions', __name__)
 
@@ -51,17 +51,19 @@ def get_rec():
                         in Location.query.order_by('name')]
 
     if form.validate_on_submit():
-        get_rec = generate_rec(user_id=current_user.id,
-                                            zone_id=form.zone.data,
-                                            location_id=form.loc.data)
+        
 
-        for rec in get_rec:
+        get_rec = Get_Rec(user_id=current_user.id,
+                                        zone_id=form.zone.data,
+                                        location_id=form.loc.data)
+# This will change if we are passing a list of lists in get.rec_list, so far this only handles a single list.
+        for rec in get_rec.rec_list:
             recs = Rec(user_id=current_user.id,
                                 item_id=rec)
             db.session.add(recs)
             db.session.commit()
     
-    return redirect(url_for('actions.get_rec'))
+        return redirect(url_for('actions.get_rec'))
 
     page = request.args.get('page', 1, type=int)
     user_recs = Rec.query.filter_by(user_id=current_user.id).order_by(

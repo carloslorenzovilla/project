@@ -1,12 +1,12 @@
 import string
 import csv
 import numpy as np
-from sklearn.cluster import AgglomerativeClustering, KMeans
 import hdbscan
 
 class Data_Matrix:
     # min keyword frequency
-    FREQ = 7
+    FREQ_HIGH = 30
+    FREQ_LOW = 10
     # min keyword count
     COUNT = 3
     # column
@@ -14,18 +14,17 @@ class Data_Matrix:
     # ignore rows less than
     IGNORE = 0
     # csv filename
-    FILE = 'Beer.csv'
+    #FILE = 'Beer.csv'
 
-    def __init__(self)
+    def __init__(self):
         self.items, self.labels = self.csv_import()
         self.keywords = self.keywords()
         self.kw_matrix = self.gen_kw_matrix()
         self.distance_matrix = self.distance_matrix()
 
-    @staticmethod
-    def csv_import():
+    def csv_import(self):
 
-        with open(FILE, newline='', encoding="utf8", errors='ignore') as f:
+        with open("beer_app\data\Beer.csv", newline='', encoding="utf8", errors='ignore') as f:
             data = csv.reader(f)
             temp = [
                             row
@@ -37,11 +36,8 @@ class Data_Matrix:
         temp2 = []
         labels = []
         for row, val in enumerate(temp):
-            if row < ignore:
-                pass
-            else:
-                labels.append(val[COL-1])
-                temp2.extend(val[COL:COL+1])
+                labels.append(val[self.COL-1])
+                temp2.extend(val[self.COL:self.COL+1])
                 
         # make single string of items, separated by new line
         items = '\n'.join(temp2)
@@ -49,7 +45,7 @@ class Data_Matrix:
         # strip punctuations from items list
         items = items.translate(str.maketrans('', '', string.punctuation))
 
-        return items.lower(), labels.lower()
+        return items.lower(), labels
 
     def keywords(self):
 
@@ -111,25 +107,25 @@ class Data_Matrix:
             else:
                 words[word] = 1
 
-        keywords = [v for v in words if words[v] > FREQ]
+        keywords = [v for v in words if self.FREQ_HIGH > words[v] > self.FREQ_LOW]
 
         return keywords
 
     def gen_kw_matrix(self):
 
         # create a matrix size items x keywords
-        kw_matrix = np.zeros((len(keywords)+2))
+        kw_matrix = np.zeros((len(self.keywords)+2))
 
-        for id, line in enumerate(items.splitlines()):
-            temp_vect = np.zeros(len(keywords)+2)
+        for id, line in enumerate(self.items.splitlines()):
+            temp_vect = np.zeros(len(self.keywords)+2)
             temp_vect[1] = id + 1
             for word in line.split():
-                for idx, key in enumerate(keywords):
+                for idx, key in enumerate(self.keywords):
                     if word == key:
                         temp_vect[idx + 2] = 1
                         break
             # only keep items that have >= COUNT keywords
-            if np.sum(temp_vect[2:]) >= COUNT:
+            if np.sum(temp_vect[2:]) >= self.COUNT:
                 kw_matrix = np.vstack((kw_matrix,temp_vect))
 
         return kw_matrix
