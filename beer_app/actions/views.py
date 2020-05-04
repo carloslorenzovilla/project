@@ -14,19 +14,28 @@ actions = Blueprint('actions', __name__)
 def log_item():
 
     form = LogActionForm()
-    form.zone.choices = [(zone.id, zone.name)
-                         for zone
-                         in Zone.query.order_by('name')]
-    form.loc.choices = [(loc.id, loc.name)
-                        for loc
-                        in Location.query.order_by('name')]
-    form.item.choices = [(item.id, item.name)
-                         for item
-                         in Item.query.order_by('location_id')]
+
+    form.zone.choices += [
+                                            (zone.id, zone.name)
+                                            for zone
+                                            in Zone.query.order_by('name')
+                                        ]
+
+    form.loc.choices += [
+                                        (loc.id, loc.name)
+                                        for loc
+                                        in Location.query.order_by('name')
+                                     ]
+
+    form.item.choices += [
+                                            (item.id, item.name)
+                                            for item
+                                            in Item.query.order_by('location_id')
+                                       ]
 
     if form.validate_on_submit():
         transaction = Log(user_id=current_user.id,
-                          item_id=form.item.data)
+                                        item_id=form.item.data)
         db.session.add(transaction)
         db.session.commit()
         return redirect(url_for('actions.log_item'))
@@ -43,12 +52,17 @@ def log_item():
 def get_rec():
 
     form = RecActionForm()
-    form.zone.choices = [(zone.id, zone.name)
-                         for zone
-                         in Zone.query.order_by('name')]
-    form.loc.choices = [(loc.id, loc.name)
-                        for loc
-                        in Location.query.order_by('name')]
+    form.zone.choices += [
+                                            (zone.id, zone.name)
+                                            for zone
+                                            in Zone.query.order_by('name')
+                                        ]
+
+    form.loc.choices += [
+                                        (loc.id, loc.name)
+                                        for loc
+                                        in Location.query.order_by('name')
+                                     ]
 
     if form.validate_on_submit():
 
@@ -74,18 +88,22 @@ def get_rec():
 @actions.route('/loc/<zone>')
 def location(zone):
 
-    location_list = [{'id': location.id, 'name': location.name}
-                     for location
-                     in Location.query.filter_by(zone_id=zone).all()]
+    location_list = [{'id': 0, 'name':'--Select a Brewery--'}]
+    location_list += [
+                                {'id': location.id, 'name': location.name}
+                                for location
+                                in Location.query.filter_by(zone_id=zone).all()
+                              ]
 
     return jsonify({'locs': location_list})
 
-
 @actions.route('/item/<loc>')
 def item(loc):
-
-    item_list = [{'id': item.id, 'name': item.name}
-                 for item
-                 in Item.query.filter_by(location_id=loc).all()]
+    item_list = [{'id': 0, 'name':'--Select a Beer--'}]
+    item_list += [
+                            {'id': item.id, 'name': item.name}
+                            for item
+                            in Item.query.filter_by(location_id=loc).all()
+                        ]
 
     return jsonify({'items': item_list})

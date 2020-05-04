@@ -40,10 +40,12 @@ def add_zone_csv():
 @login_required
 def add_location_form():
     form = LocationForm()
-    form.zone_id.choices = [(zone.id, zone.name)
-                            for zone
-                            in Zone.query.order_by('name')
-                            ]
+    form.zone_id.choices = [(0,'--Select a Neighborhood--')]
+    form.zone_id.choices += [
+                                                (zone.id, zone.name)
+                                                for zone
+                                                in Zone.query.order_by('name')
+                                            ]
 
     if form.validate_on_submit():
         location = Location(name=form.name.data,
@@ -79,10 +81,12 @@ def add_location_csv():
 @login_required
 def add_item_form():
     form = ItemForm()
-    form.location.choices = [(loc.id, loc.name)
-                             for loc
-                             in Location.query.order_by('name')
-                             ]
+    form.location.choices = [(0, '--Select a Brewery--')]
+    form.location.choices += [
+                                                (loc.id, loc.name)
+                                                for loc
+                                                in Location.query.order_by('name')
+                                              ]
 
     if form.validate_on_submit():
         item = Item(location_id=form.location.data,
