@@ -14,7 +14,7 @@ class Data_Matrix:
     # ignore rows less than
     IGNORE = 0
     # csv filename
-    #FILE = 'Beer.csv'
+    FILE = "beer_app\data\Beer.csv"
 
     def __init__(self):
         self.items, self.labels = self.csv_import()
@@ -24,7 +24,7 @@ class Data_Matrix:
 
     def csv_import(self):
 
-        with open("beer_app\data\Beer.csv", newline='', encoding="utf8", errors='ignore') as f:
+        with open(self.FILE, newline='', encoding="utf8", errors='ignore') as f:
             data = csv.reader(f)
             temp = [
                             row
@@ -95,19 +95,25 @@ class Data_Matrix:
                     'citra','cascade',"it's",'azacca','touch','through','chinook',
                     'magnum']
 
-        print(len(stopwords))
-
-        items = [item for item in items if (
-            len(item) > 3) and (item not in stopwords)]
+        items = [
+                        item 
+                        for item 
+                        in items 
+                        if len(item) > 3 
+                        and item 
+                        not in stopwords
+                    ]
 
         words = {}
         for word in items:
-            if word in words:
-                words[word] += 1
-            else:
-                words[word] = 1
+            words[word] = words.get(word, 0) + 1
 
-        keywords = [v for v in words if self.FREQ_HIGH > words[v] > self.FREQ_LOW]
+        keywords = [
+                                v 
+                                for v 
+                                in words 
+                                if self.FREQ_HIGH > words[v] > self.FREQ_LOW
+                            ]
 
         return keywords
 

@@ -71,7 +71,7 @@ def account():
             pic = add_profile_pic(form.picture.data, username)
             current_user.profile_image = pic
 
-        current_user.name = form.username.data
+        current_user.username = form.username.data
         current_user.email = form.email.data
         db.session.commit()
         flash('User account updated!')

@@ -9,6 +9,7 @@ def load_user(user_id):
     return User.query.get(user_id)
 
 # USER ACCOUNT
+
 class User(db.Model, UserMixin):
 
     __tablename__ = 'users'
@@ -36,7 +37,6 @@ class User(db.Model, UserMixin):
 
 # NEIGHBORHOODS
 
-
 class Zone(db.Model):
 
     __tablename__ = 'zones'
@@ -52,7 +52,6 @@ class Zone(db.Model):
         return f"{self.name}"
 
 # BREWERIES
-
 
 class Location(db.Model):
 
@@ -80,7 +79,6 @@ class Location(db.Model):
 
 # BEERS
 
-
 class Item(db.Model):
 
     __tablename__ = 'items'
@@ -106,7 +104,6 @@ class Item(db.Model):
         return f"{self.name} -- {self.locations.name} -- {self.style} -- ABV: {self.abv} -- IBU: {self.ibu}"
 
 # USER BEER LOG
-
 
 class Log(db.Model):
 
