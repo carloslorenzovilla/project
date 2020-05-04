@@ -34,31 +34,37 @@ class Get_Rec():
                                 self.engine.affinity_vector[1, :] == max(self.engine.affinity_vector[1, :])))[0])
         
         for cluster_id in top_clusters:
-            print(cluster_id)
 
+            cluster_list = self.engine.kw_matrix[:,:2]
+            cluster_items = []
 
-        # print(self.zone_id)
+            for row in cluster_list:
+                if row[0] == cluster_id:
+                    cluster_items.append(int(row[1]))
         
-        # if self.zone_id:
-        #     location_id_list = [
-        #                                     location.id
-        #                                     for location
-        #                                     in Location.query.filter_by(zone_id=self.zone_id)
-        #                                  ]
-        # else:
-        location_id_list = [self.location_id]
-        
-        #return a list of lists of items filtered by location and top category
-        rec_list = [
-                            [
-                                item.id
-                                for item
-                                in Item.query.filter_by(location_id=location_id)
+            if self.zone_id:
+                location_id_list = [
+                                                location.id
+                                                for location
+                                                in Location.query.filter_by(zone_id=self.zone_id)
+                                            ]
+            else:
+                location_id_list = [self.location_id]
+            
+            #return a list of lists of items filtered by location and top category
+            rec_list = [
+                                [
+                                    item.id
+                                    for item
+                                    in Item.query.filter_by(location_id=location_id)
+                                    if item.id in cluster_items
+                                ]
+                                for location_id
+                                in location_id_list
                             ]
-                            for location_id
-                            in location_id_list
-                        ]
 
-        return rec_list[0]
+            print(rec_list)
+
+            return rec_list
        
     

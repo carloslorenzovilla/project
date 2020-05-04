@@ -51,17 +51,16 @@ def get_rec():
                         in Location.query.order_by('name')]
 
     if form.validate_on_submit():
-        
 
         get_rec = Get_Rec(user_id=current_user.id,
                                         zone_id=form.zone.data,
                                         location_id=form.loc.data)
-# This will change if we are passing a list of lists in get.rec_list, so far this only handles a single list.
-        for rec in get_rec.rec_list:
-            recs = Rec(user_id=current_user.id,
-                                item_id=rec)
-            db.session.add(recs)
-            db.session.commit()
+        for location in get_rec.rec_list:
+            for rec in location:
+                recs = Rec(user_id=current_user.id,
+                                    item_id=rec)
+                db.session.add(recs)
+                db.session.commit()
     
         return redirect(url_for('actions.get_rec'))
 
