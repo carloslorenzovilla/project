@@ -14,7 +14,7 @@ class Data_Matrix:
     # ignore rows less than
     IGNORE = 0
     # csv filename
-    FILE = "data\Beer.csv"
+    FILE = "Beer.csv"
 
     def __init__(self):
         self.items, self.labels = self.csv_import()
