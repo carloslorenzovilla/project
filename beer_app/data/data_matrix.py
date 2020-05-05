@@ -14,7 +14,7 @@ class Data_Matrix:
     # ignore rows less than
     IGNORE = 0
     # csv filename
-    FILE = "beer_app\data\Beer.csv"
+    FILE = "https://beer-rec-app.herokuapp.com/beer_app/data/Beer.csv"
 
     def __init__(self):
         self.items, self.labels = self.csv_import()
