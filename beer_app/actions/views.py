@@ -34,6 +34,7 @@ def log_item():
                                        ]
 
     if form.validate_on_submit():
+       
         transaction = Log(user_id=current_user.id,
                                         item_id=form.item.data)
         db.session.add(transaction)
