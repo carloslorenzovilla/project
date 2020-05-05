@@ -2,6 +2,7 @@ import string
 import csv
 import numpy as np
 import hdbscan
+import pandas as pd
 
 class Data_Matrix:
     # min keyword frequency
@@ -14,7 +15,7 @@ class Data_Matrix:
     # ignore rows less than
     IGNORE = 0
     # csv filename
-    FILE = os.path.join(current_app.root_path,'static\profile_pics\Beer.csv')
+    #FILE = s3.url_for('static/profile_pics/Beer.csv')
 
     def __init__(self):
         self.items, self.labels = self.csv_import()
@@ -24,13 +25,12 @@ class Data_Matrix:
 
     def csv_import(self):
 
-        with open(self.FILE, newline='', encoding="utf8", errors='ignore') as f:
-            data = csv.reader(f)
-            temp = [
-                            row
-                            for row
-                            in data
-                        ]
+        data = pd.read_csv('s3://beerappfiles/Beer.csv')
+        temp = [
+                        row
+                        for row
+                        in data
+                    ]
 
         # create temp list of items
         temp2 = []
