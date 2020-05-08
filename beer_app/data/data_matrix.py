@@ -2,6 +2,7 @@ import string
 import csv
 import numpy as np
 import hdbscan
+from flask import url_for
 
 class Data_Matrix:
     # min keyword frequency
@@ -14,9 +15,8 @@ class Data_Matrix:
     # ignore rows less than
     IGNORE = 0
     # csv filename
-    FILE = "beer_app\data\Beer.csv"
+    FILE = "beer_app\static\data\Beer.csv"
 
-    #data = pd.read_csv('s3://beerappfiles/Beer.csv')
 
     def __init__(self):
         self.items, self.labels = self.csv_import()
