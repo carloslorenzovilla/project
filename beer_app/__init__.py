@@ -1,13 +1,22 @@
 # beer_app/init.py
 import os
-from flask import Flask
+from flask import Flask, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
+from flask_s3 import FlaskS3
 
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'password3X'
+
+########################
+######## S3 SETUP#######
+########################
+
+app.config['FLASKS3_BUCKET_NAME'] = 'beerappfiles'
+
+s3 = FlaskS3(app)
 
 ########################
 #### DATABASE SETUP ####

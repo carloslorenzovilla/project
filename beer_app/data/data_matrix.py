@@ -3,6 +3,7 @@ import csv
 import numpy as np
 import hdbscan
 from flask import url_for
+from beer_app import s3, app
 
 class Data_Matrix:
     # min keyword frequency
@@ -15,8 +16,6 @@ class Data_Matrix:
     # ignore rows less than
     IGNORE = 0
     # csv filename
-    FILE = "beer_app\static\data\Beer.csv"
-
 
     def __init__(self):
         self.items, self.labels = self.csv_import()
@@ -25,8 +24,11 @@ class Data_Matrix:
         self.distance_matrix = self.distance_matrix()
 
     def csv_import(self):
+        with app.test_request_context():
+            brew_data = url_for("/beer_app/static", filename="Beer.csv")
 
-        with open(self.FILE, newline='', encoding="utf8", errors='ignore') as f:
+
+        with open(brew_data, newline='', encoding="utf8", errors='ignore') as f:
             data = csv.reader(f)
             temp = [
                             row
