@@ -1,5 +1,4 @@
-import string
-import csv
+import string, requests, csv
 import numpy as np
 import hdbscan
 from flask import url_for
@@ -24,17 +23,15 @@ class Data_Matrix:
         self.distance_matrix = self.distance_matrix()
 
     def csv_import(self):
-        with app.test_request_context():
-            brew_data = url_for("/beer_app/static", filename="Beer.csv")
+        
+        url = 'https://beerappfiles.s3.amazonaws.com/static/Beer.csv'
 
+        with requests.Session() as rs:
+            raw = rs.get(url)
 
-        with open(brew_data, newline='', encoding="utf8", errors='ignore') as f:
-            data = csv.reader(f)
-            temp = [
-                            row
-                            for row
-                            in data
-                        ]
+        data = raw.content.decode('utf-8')
+
+        temp = list(csv.reader(data.splitlines(), delimiter=','))
 
         # create temp list of items
         temp2 = []

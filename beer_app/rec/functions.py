@@ -57,8 +57,6 @@ class Get_Rec():
                                 in location_id_list
                             ]
 
-            print(rec_list)
-
             return rec_list
        
     
