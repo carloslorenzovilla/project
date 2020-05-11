@@ -33,15 +33,14 @@ class Data_Matrix:
 
         temp = list(csv.reader(data.splitlines(), delimiter=','))
 
-        # create temp list of items
-        temp2 = []
+        temp_2 = []
         labels = []
-        for row, val in enumerate(temp):
+        for val in temp:
                 labels.append(val[self.COL-1])
-                temp2.extend(val[self.COL:self.COL+1])
+                temp_2.extend(val[self.COL:self.COL+1])
                 
         # make single string of items, separated by new line
-        items = '\n'.join(temp2)
+        items = '\n'.join(temp_2)
 
         # strip punctuations from items list
         items = items.translate(str.maketrans('', '', string.punctuation))
@@ -120,19 +119,22 @@ class Data_Matrix:
 
     def gen_kw_matrix(self):
 
-        # create a matrix size items x keywords
-        kw_matrix = np.zeros((len(self.keywords)+2))
+        # Create a matrix size items x keywords.
+        # Prefix matrix with n additional columns 
+        # (cluster_id, item_id, n...)
+        n = 2
+        kw_matrix = np.zeros((len(self.keywords)+n))
 
         for id, line in enumerate(self.items.splitlines()):
-            temp_vect = np.zeros(len(self.keywords)+2)
+            temp_vect = np.zeros(len(self.keywords)+n)
             temp_vect[1] = id + 1
             for word in line.split():
                 for idx, key in enumerate(self.keywords):
                     if word == key:
-                        temp_vect[idx + 2] = 1
+                        temp_vect[idx + n] = 1
                         break
             # only keep items that have >= COUNT keywords
-            if np.sum(temp_vect[2:]) >= self.COUNT:
+            if np.sum(temp_vect[n:]) >= self.COUNT:
                 kw_matrix = np.vstack((kw_matrix,temp_vect))
 
         return kw_matrix

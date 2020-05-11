@@ -81,7 +81,7 @@ def get_rec():
 
     page = request.args.get('page', 1, type=int)
     user_recs = Rec.query.filter_by(user_id=current_user.id).order_by(
-        Rec.date.desc()).paginate(page=page, per_page=4)
+        Rec.date.desc()).paginate(page=page, per_page=3)
 
     return render_template('rec.html', form=form, user_recs=user_recs)
 

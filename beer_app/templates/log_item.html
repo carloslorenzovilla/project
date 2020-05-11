@@ -47,10 +47,10 @@
 <div class="fixed-bottom">
     <nav aria-label='User Post Log'>
         <ul class='pagination sticky-bottom justify-content-center'>
-            {% for page_num in user_post_log.iter_pages(left_edge=1,
-                                                                                        right_edge=1,
-                                                                                        left_current=5,
-                                                                                        right_current=5) %}
+            {% for page_num in user_post_log.iter_pages(left_edge=2,
+                                                                                        right_edge=2,
+                                                                                        left_current=2,
+                                                                                        right_current=2) %}
             {% if user_post_log.page == page_num %}
             <li class='page-item active' aria-current="page">
                 <span class="page-link" href="{{url_for('actions.log_item',page=page_num)}}">{{page_num}}

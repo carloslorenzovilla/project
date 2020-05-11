@@ -20,7 +20,7 @@ class Get_Rec():
         self.engine = Rec_Engine(user_data=self.user_data)
         self.rec_list = self.generate_rec()
         
-    #returns 2D array, ([style, affinity])
+    #returns a recommendation list
     def generate_rec(self):
         affinity_vector = self.engine.affinity_vector
         # use the affinity vector to determine the top category, find the maximum value from the second column
@@ -36,15 +36,16 @@ class Get_Rec():
                 if row[0] == cluster_id:
                     cluster_items.append(int(row[1]))
         
-            if self.zone_id:
+            if  self.location_id:
+                location_id_list = [self.location_id]
+            
+            else:               
                 location_id_list = [
                                                 location.id
                                                 for location
                                                 in Location.query.filter_by(zone_id=self.zone_id)
                                             ]
-            else:
-                location_id_list = [self.location_id]
-            
+
             #return a list of lists of items filtered by location and top category
             rec_list = [
                                 [
